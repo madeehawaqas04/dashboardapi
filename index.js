@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const Book = require('./model/books');
+const Students=require('./model/students');
 const { error } = require('console');
 
 
@@ -37,7 +38,8 @@ app.get('/add-note', async (req, res) => {
             },
             {
                 title: "game 2",
-                body: "body text 2"}
+                body: "body text 2"
+            }
         ]);
 
         res.send('Books added');
@@ -48,18 +50,54 @@ app.get('/add-note', async (req, res) => {
 })
 
 
-app.get('/books',async(req,res)=>{
-const book=await Book.find();
+app.get('/books', async (req, res) => {
+    const book = await Book.find();
 
-if(book){
-res.json(book);
-} else {
-res.send("something went wrong.");
-}
+    if (book) {
+        res.json(book);
+    } else {
+        res.send("something went wrong.");
+    }
 
 
 });
 
+
+
+
+
+app.get('/addStudents', async (req, res) => {
+    try {
+        await Students.insertMany([
+            {
+                title: "game 1",
+                body: "body text 1"
+            },
+            {
+                title: "game 2",
+                body: "body text 2"
+            }
+        ]);
+
+        res.send('Students added');
+    }
+    catch (error) {
+        console.log('error', + error)
+    }
+})
+
+
+app.get('/Students', async (req, res) => {
+    const student = await Students.find();
+
+    if (student) {
+        res.json(student);
+    } else {
+        res.send("something went wrong.");
+    }
+
+
+});
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
 });
